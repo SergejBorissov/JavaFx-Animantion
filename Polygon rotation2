@@ -1,0 +1,84 @@
+package testFx;
+
+
+import javafx.animation.RotateTransition;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.effect.Reflection;
+import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Polygon;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+import java.io.FileNotFoundException;
+
+
+/**
+ * @author Sergej Borissov
+ *
+ * Polygon rotation,
+ * mit Reflection und Effekt
+ *
+ */
+
+public class Main extends Application {
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws FileNotFoundException {
+
+        Polygon polygon = new Polygon();
+        Button rotation360 = new Button("rotation 360");
+        Button rotation90 = new Button("rotation 90");
+        Button changeColor = new Button("color");
+
+        polygon.getPoints().addAll(new Double[]{
+                200.0, 50.0,
+                400.0, 50.0,
+                450.0, 150.0,
+                400.0, 250.0,
+                200.0, 250.0,
+                150.0, 150.0,
+        });
+
+        polygon.setFill(Color.GREY);
+
+        rotation360.setOnAction(event -> {
+            RotateTransition rotateTransition = new RotateTransition();
+            rotateTransition.setDuration(Duration.millis(1000));
+            rotateTransition.setNode(polygon);
+            rotateTransition.setByAngle(360);
+            rotateTransition.setAutoReverse(false);
+            rotateTransition.play();
+        });
+
+        rotation90.setOnAction(event -> {
+
+            RotateTransition rotateTransition = new RotateTransition();
+            rotateTransition.setDuration(Duration.millis(2000));
+            rotateTransition.setNode(polygon);
+            rotateTransition.setByAngle(90);
+            rotateTransition.setAutoReverse(false);
+            rotateTransition.play();
+
+        });
+
+        changeColor.setOnAction(event -> {
+            polygon.setFill(Color.GREEN);
+            polygon.setEffect(new Reflection());
+        });
+
+
+        VBox root = new VBox(polygon, rotation360, rotation90, changeColor);
+
+        Scene scene = new Scene(root,600,300);
+        primaryStage.setTitle("Rotate transition");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+
+    }
+}
