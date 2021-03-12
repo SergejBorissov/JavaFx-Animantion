@@ -1,0 +1,170 @@
+package animationFX;
+
+import javafx.animation.*;
+import javafx.application.Application;
+import javafx.event.EventHandler;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+import java.net.MalformedURLException;
+
+public class QuaderMatrix extends Application
+{
+    public static int sizeQuader = 20;
+
+    public static void setSizeQuader(int sizeQuader) {
+        QuaderMatrix.sizeQuader = sizeQuader;
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws MalformedURLException
+    {
+        BorderPane borderPane = new BorderPane();
+        Button buttonMain = new Button("Hauptmenü (H - Taste)");
+        Button buttonExit = new Button("Exit");
+        Button buttonTon = new Button("TestTon");
+        Button buttonEffekt = new Button("Effekt");
+
+
+        GridPane gridPane = new GridPane();
+        gridPane.setGridLinesVisible(true);
+        gridPane.setVgap(sizeQuader);
+        gridPane.setHgap(sizeQuader);
+        gridPane.setAlignment(Pos.CENTER);
+
+        borderPane.setCenter(gridPane);
+        borderPane.setBottom(buttonMain);
+        borderPane.setLeft(buttonExit);
+        borderPane.setRight(buttonTon);
+
+        QuaderMatrix hauptMenu = new QuaderMatrix();
+        buttonMain.setOnAction( event ->
+        {
+            try
+            {
+              hauptMenu.start(primaryStage);
+           } catch (Exception e) {
+               e.printStackTrace();
+           }
+        });
+
+
+
+        buttonExit.addEventHandler(KeyEvent.KEY_PRESSED, keyEvent ->{
+            if(keyEvent.getCode() == KeyCode.W){
+                try{
+                    System.out.println("erster");
+                } catch(Exception e){
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+
+
+        Rectangle[][] rectangles = new Rectangle[sizeQuader][sizeQuader];
+
+        for(int i=0; i<rectangles.length; i++)
+        {
+            for(int j=0; j<rectangles.length;j++)
+            {
+                rectangles[i][j] = new Rectangle();
+                rectangles[i][j].setHeight(15);
+                rectangles[i][j].setWidth(15);
+                rectangles[i][j].setFill(Color.WHITESMOKE);
+
+                gridPane.add(rectangles[i][j], i, j);
+
+                ScaleTransition scaleTransition = new ScaleTransition(Duration.seconds(1),
+                        rectangles[i][j]);
+                scaleTransition.setByX(1.5);
+                scaleTransition.setByY(1.5);
+                RotateTransition transition = new RotateTransition(Duration.seconds(1),
+                        rectangles[i][j]);
+
+                transition.setDuration(Duration.seconds(1));
+                transition.setRate(0.36);
+                transition.setFromAngle(0);
+                transition.setToAngle(400);
+
+                FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1),
+                        rectangles[i][j]);
+                fadeTransition.setFromValue(1);
+                fadeTransition.setToValue(0);
+
+
+                StrokeTransition strokeTransition = new StrokeTransition(Duration.seconds(1),
+                        rectangles[i][j]);
+                strokeTransition.setFromValue(Color.WHITESMOKE);
+                strokeTransition.setToValue(Color.GREY);
+                strokeTransition.play();
+
+
+
+                SequentialTransition sequentialTransition = new SequentialTransition
+                        (new ParallelTransition(scaleTransition,
+                        transition), fadeTransition);
+                sequentialTransition.setAutoReverse(true);
+                sequentialTransition.setCycleCount(Animation.INDEFINITE);
+                sequentialTransition.play();
+
+                if ((i + j) == (rectangles.length - 1))
+                {
+                    rectangles[i][j].setFill(Color.BLACK);
+                }
+            }
+            rectangles[i][i].setFill(Color.BLACK);
+        }
+
+        Scene scene = new Scene(borderPane);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+
+}
+
+
+
+
+-----------------------------------------------
+
+
+package animationFX;
+
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.PerspectiveCamera;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+public class Main extends Application {
+
+    public static void main(String[] args)
+    {
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        FXMLLoader fxmlLoader = new FXMLLoader(QuaderMatrix.class.getResource("HauptMenu.fxml"));
+        fxmlLoader.load();
+        Scene scene = new Scene(fxmlLoader.getRoot(), 650, 850);
+
+        scene.setCamera(new PerspectiveCamera());
+        primaryStage.setTitle("setQuaderMatrix");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+}
+
+
