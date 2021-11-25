@@ -3,6 +3,7 @@ package de.borissov;
 import javafx.animation.RotateTransition;
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
@@ -17,14 +18,17 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        VBox vBox = new VBox();
+        Pane leinwand = new Pane();
 
-        Line line1 = new Line(700,300,1700,1300);
+        Line line1 = new Line(300,100,700,400);
+
+
+        Line line2 = new Line(280,80,680,380);
 
 
 
-        vBox.getChildren().add(line1);
-        Scene scene = new Scene(vBox, 1200,700);
+        leinwand.getChildren().addAll(line1, line2);
+        Scene scene = new Scene(leinwand, 1200,700);
 
         RotateTransition rotateTransition = new RotateTransition();
 
