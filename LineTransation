@@ -1,0 +1,40 @@
+package de.borissov;
+
+import javafx.animation.RotateTransition;
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
+import javafx.stage.Stage;
+import javafx.util.Duration;
+
+public class Main extends Application {
+
+    public static void main(String[] args) {
+       launch(args);
+    }
+
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+
+        VBox vBox = new VBox();
+
+        Line line1 = new Line(700,300,1700,1300);
+
+
+
+        vBox.getChildren().add(line1);
+        Scene scene = new Scene(vBox, 1200,700);
+
+        RotateTransition rotateTransition = new RotateTransition();
+
+        rotateTransition.setNode(line1);
+        rotateTransition.setByAngle(360);
+        rotateTransition.setAutoReverse(false);
+        rotateTransition.setDuration(Duration.seconds(3));
+        rotateTransition.play();
+
+        primaryStage.setScene(scene);
+        primaryStage.show();
+    }
+}
