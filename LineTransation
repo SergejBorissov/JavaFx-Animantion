@@ -15,13 +15,25 @@ public class Main extends Application {
     public static void main(String[] args) {
        launch(args);
     }
-
     @Override
     public void start(Stage primaryStage) throws Exception {
 
         Pane leinwand = new Pane();
+        RotateTransition rotateTransition = new RotateTransition();
+        Scene scene = new Scene(leinwand, 1200,700);
 
-        Line line1 = new Line(300,100,700,400);
+        for(int i = 0; i < 300; i++){
+            Line line1 = new Line(30*i,i * 10,i * 70,400);
+
+
+            rotateTransition.setNode(line1);
+            rotateTransition.setByAngle(360);
+            rotateTransition.setAutoReverse(false);
+            rotateTransition.setDuration(Duration.seconds(3));
+            leinwand.getChildren().addAll(line1);
+            rotateTransition.play();
+        }
+
 
 
         for(int i = 0; i < 300; i++){
@@ -29,19 +41,7 @@ public class Main extends Application {
             line3.setStroke(Color.LIGHTBLUE);
             leinwand.getChildren().add(line3);
         }
-
-
-        leinwand.getChildren().addAll(line1);
-        Scene scene = new Scene(leinwand, 1200,700);
-
-        RotateTransition rotateTransition = new RotateTransition();
-
-        rotateTransition.setNode(line1);
-        rotateTransition.setByAngle(360);
-        rotateTransition.setAutoReverse(false);
-        rotateTransition.setDuration(Duration.seconds(3));
-        rotateTransition.play();
-
+        
         primaryStage.setScene(scene);
         primaryStage.show();
     }
