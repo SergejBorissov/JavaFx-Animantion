@@ -5,6 +5,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -23,11 +24,14 @@ public class Main extends Application {
         Line line1 = new Line(300,100,700,400);
 
 
-        Line line2 = new Line(280,80,680,380);
+        for(int i = 0; i < 300; i++){
+            Line line3 = new Line(55*i,i * 34,i * 10,500);
+            line3.setStroke(Color.LIGHTBLUE);
+            leinwand.getChildren().add(line3);
+        }
 
 
-
-        leinwand.getChildren().addAll(line1, line2);
+        leinwand.getChildren().addAll(line1);
         Scene scene = new Scene(leinwand, 1200,700);
 
         RotateTransition rotateTransition = new RotateTransition();
