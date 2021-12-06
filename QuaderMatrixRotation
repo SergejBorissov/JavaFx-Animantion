@@ -17,6 +17,11 @@ import javafx.util.Duration;
 
 import java.net.MalformedURLException;
 
+/**
+ * @author: Sergej Borissov
+ *
+ */
+
 public class QuaderMatrix extends Application
 {
     public static int sizeQuader = 20;
@@ -146,6 +151,11 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.PerspectiveCamera;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+/**
+ * @author: Sergej Borissov
+ *
+ */
 
 public class Main extends Application {
 
